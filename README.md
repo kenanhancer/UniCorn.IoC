@@ -37,7 +37,7 @@ IShape square = container.Resolve<Square>();
 ##Resolving different concrete types which implement same interface
 If you have different concrete types which imlement same interface, you can register them with different names. As you can see below sample code, there is one `IShape` interface and two concrete types `Circle`, `Square` which use that interface.
 
-
+###Test Service Types
 ```csharp
 public interface IShape
 {
@@ -52,6 +52,7 @@ public class Square : IShape
 }
 ```
 
+###Usage in application
 ```csharp
 UniIoC container = new UniIoC();
 
@@ -63,8 +64,9 @@ var square = container.Resolve<IShape>("Square");
 ```
 
 ##Register and Resolve Complex types
-There are two concrete types which implement ILoginService interface and those have constructor which has parameter named loginValidator. UniIoC can register and resolve these complex types as below. I will use following code for use cases.
+There are two concrete types which implement ILoginService interface and those have constructor which has parameter named loginValidator. UniIoC can register and resolve these complex types as below. I will use following test code for use cases.
 
+###Test Service Types
 ```csharp
 public interface ILoginService
 {
@@ -168,6 +170,8 @@ public class EmailLoginService : ILoginService
     }
 ```
 
+###Usage in application
+This sample usage will register two service type named EmailLoginService and PhoneLoginService with EmailLoginValidator and PhoneLoginValidator dependencies respectively. Those two services are using same interface, so we entitled them Email and Phone respectively so that, we can just resolve services with name.
 
 ```csharp
 UniIoC container = new UniIoC();
@@ -181,7 +185,6 @@ container.Register(ServiceCriteria.For<ILoginService>().ImplementedBy<PhoneLogin
 PhoneLoginService phoneLoginService = container.Resolve<PhoneLoginService>("Phone");
 ILoginService emailLoginService = container.Resolve<ILoginService>("Email");
 
-string sessionKey1 = phoneLoginService.Login("", "");
-string sessionKey2 = emailLoginService.Login("", "");
-
+string sessionKey1 = phoneLoginService.Login("user1", "password1");
+string sessionKey2 = emailLoginService.Login("user2", "password2");
 ```
