@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using UniCorn.Core;
 
 namespace UniCorn.IoC
@@ -78,24 +79,40 @@ namespace UniCorn.IoC
 
         public TService Resolve<TService>(object serviceKey = null) where TService : class
         {
-            return (TService)Resolve(serviceKey ?? typeof(TService));
+            ServiceDescription serviceDescription = container.GetValue(serviceKey ?? typeof(TService));
+
+            if (serviceDescription == null)
+            {
+                Type serviceType = (serviceKey ?? typeof(TService)) as Type;
+
+                if (serviceType.GetTypeInfo().IsClass)
+                {
+                    Register(ServiceCriteria.For(serviceType).ImplementedBy(typeof(TService)));
+
+                    serviceDescription = container.GetValue(serviceKey);
+                }
+
+                if (serviceDescription == null)
+                    throw new NullReferenceException("serviceDescription");
+            }
+
+            if (serviceDescription.AnonymousInstantiator != null)
+                return serviceDescription.AnonymousInstantiator as TService;
+            else if (serviceDescription.AnonymousInstantiatorLambda != null)
+                return serviceDescription.AnonymousInstantiatorLambda as TService;
+
+            if (serviceDescription.LifeCycle == LifeCycleEnum.Singleton)
+                return serviceDescription.CreatedInstance as TService;
+
+            if (serviceDescription.InterceptorType == null && serviceDescription.InterceptorCallback == null && serviceDescription.InstanceCreatorCallback != null)
+                return serviceDescription.InstanceCreatorCallback(this) as TService;
+            else
+                return serviceDescription.NewInstanceCreatorDelegate(serviceDescription) as TService;
         }
 
         public object Resolve(object serviceKey)
         {
-            ServiceDescription serviceDescription = container.GetValue(serviceKey);
-
-            if (serviceDescription == null)
-                throw new NullReferenceException("serviceDescription");
-
-            if (serviceDescription.LifeCycle == LifeCycleEnum.Singleton)
-                return serviceDescription.CreatedInstance;
-
-            if (serviceDescription.InterceptorType == null && serviceDescription.InterceptorCallback == null && serviceDescription.InstanceCreatorCallback != null)
-                return serviceDescription.InstanceCreatorCallback(this);
-            else
-                return serviceDescription.NewInstanceCreatorDelegate(serviceDescription);
-            //return serviceDescription.ConcreteInstanceCreatorDelegate(null);
+            return Resolve<object>(serviceKey);
         }
 
         public bool IsRegistered(object serviceKey)

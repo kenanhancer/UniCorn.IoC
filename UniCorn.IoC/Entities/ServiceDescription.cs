@@ -156,6 +156,7 @@ namespace UniCorn.IoC
         public Func<IUniIoC, object> InstanceCreatorCallback { get; private set; }
         public Func<ServiceDescription, object> NewInstanceCreatorDelegate { get; private set; }
         public Func<object[], object> AnonymousInstantiator { get; private set; }
+        public LambdaExpression AnonymousInstantiatorLambda { get; private set; }
         internal IUniIoC ioCcontainer;
 
         protected ServiceDescription() { }
@@ -181,65 +182,74 @@ namespace UniCorn.IoC
 
             Interlocked.CompareExchange(ref this.ioCcontainer, ioCcontainer, null);
 
-            if (InterceptorType != null || InterceptorCallback != null)
+            if (IsProxy)
+            {
                 ConcreteProxyType = ProxyTypeFactory.CreateProxyType(ConcreteType, ResolveType);
+            }
+
+            ConcreteType = ConcreteType ?? ResolveType;
 
             Type innerConcreteType = ConcreteProxyType ?? ConcreteType;
 
             ServiceKey = ServiceKey ?? ResolveType ?? ConcreteProxyType ?? ConcreteType;
 
-            NewInstanceCreatorDelegate = ProxyInstanceFactory.GetOrCreateProxyInstanceDelegate(innerConcreteType);
-
-            AnonymousInstantiator = GetAnonymousInstantiator(innerConcreteType);
-
-            if (InterceptorType != null)
+            if (typeof(LambdaExpression).GetTypeInfo().IsAssignableFrom(innerConcreteType))
+                AnonymousInstantiatorLambda = ReflectionFactory.GetAnonymousInstantiatorLambda(ResolveType);
+            else if (typeof(Func<object[], object>).GetTypeInfo().IsAssignableFrom(innerConcreteType))
+                AnonymousInstantiator = ReflectionFactory.GetAnonymousInstantiator(ResolveType);
+            else
             {
-                List<Type> prmTypes = new List<Type>();
-                prmTypes.Add(typeof(IInterceptor));
+                NewInstanceCreatorDelegate = ProxyInstanceFactory.GetOrCreateProxyInstanceDelegate(innerConcreteType);
 
-                if (InstanceCreatorCallback != null)
+                if (ConcreteType != null && InstanceCreatorCallback == null)
+                    ConcreteInstanceCreatorDelegate = UniCornTypeFactory.CreateInstanceDelegate(ConcreteType);
+
+                if (InterceptorType != null)
                 {
-                    prmTypes.Add(ResolveType ?? innerConcreteType);
+                    List<Type> prmTypes = new List<Type>();
+                    prmTypes.Add(typeof(IInterceptor));
+
+                    if (InstanceCreatorCallback != null)
+                    {
+                        prmTypes.Add(ResolveType ?? innerConcreteType);
+                    }
+
+                    Constructor = innerConcreteType.GetConstructor(prmTypes.ToArray());
+
+                    InterceptorServiceDesc = ioCcontainer.container.GetValue(InterceptorType);
+                }
+                else if (innerConcreteType == null && InstanceCreatorCallback != null)
+                {
+                    ServiceDescription serviceDesc = ioCcontainer.container.GetValue(ResolveType);
+
+                    innerConcreteType = serviceDesc.ConcreteProxyType ?? serviceDesc.ConcreteType;
                 }
 
-                Constructor = innerConcreteType.GetConstructor(prmTypes.ToArray());
+                if (innerConcreteType == null)
+                    return;
 
-                InterceptorServiceDesc = ioCcontainer.container.GetValue(InterceptorType);
-            }
-            else if (innerConcreteType == null && InstanceCreatorCallback != null)
-            {
-                ServiceDescription serviceDesc = ioCcontainer.container.GetValue(ResolveType);
+                Constructor = innerConcreteType.GetConstructor(Type.EmptyTypes);
 
-                innerConcreteType = serviceDesc.ConcreteProxyType ?? serviceDesc.ConcreteType;
-            }
-
-            if (ConcreteType != null && InstanceCreatorCallback == null)
-                ConcreteInstanceCreatorDelegate = UniCornTypeFactory.CreateInstanceDelegate(ConcreteType);
-
-            if (innerConcreteType == null)
-                return;
-
-            Constructor = innerConcreteType.GetConstructor(Type.EmptyTypes);
-
-            if (Constructor == null)
-            {
-                Constructor = innerConcreteType.GetConstructors().FirstOrDefault();
-            }
-
-            if (Constructor != null)
-            {
-                ConstructorParameters = Constructor.GetParameters();
-            }
-
-            if (LifeCycle == LifeCycleEnum.Singleton)
-            {
-                if (!IsProxy && InstanceCreatorCallback != null)
+                if (Constructor == null)
                 {
-                    CreatedInstance = InstanceCreatorCallback(ioCcontainer);
+                    Constructor = innerConcreteType.GetConstructors().FirstOrDefault();
                 }
-                else
+
+                if (Constructor != null)
                 {
-                    CreatedInstance = NewInstanceCreatorDelegate(this);
+                    ConstructorParameters = Constructor.GetParameters();
+                }
+
+                if (LifeCycle == LifeCycleEnum.Singleton)
+                {
+                    if (!IsProxy && InstanceCreatorCallback != null)
+                    {
+                        CreatedInstance = InstanceCreatorCallback(ioCcontainer);
+                    }
+                    else
+                    {
+                        CreatedInstance = NewInstanceCreatorDelegate(this);
+                    }
                 }
             }
         }
@@ -259,10 +269,7 @@ namespace UniCorn.IoC
             Type resolveType = typeof(TResolve);
             TypeInfo resolveTypeInfo = resolveType.GetTypeInfo();
 
-            if (resolveTypeInfo.IsClass)
-                this.ConcreteType = resolveType;
-            else if (resolveTypeInfo.IsInterface)
-                this.ResolveType = resolveType;
+            this.ResolveType = resolveType;
 
             return this;
         }
@@ -271,10 +278,7 @@ namespace UniCorn.IoC
         {
             TypeInfo resolveTypeInfo = resolveType.GetTypeInfo();
 
-            if (resolveTypeInfo.IsClass)
-                this.ConcreteType = resolveType;
-            else if (resolveTypeInfo.IsInterface)
-                this.ResolveType = resolveType;
+            this.ResolveType = resolveType;
 
             return this;
         }
@@ -355,26 +359,6 @@ namespace UniCorn.IoC
                 this.LifeCycle = LifeCycleEnum.Transient;
                 return this;
             }
-        }
-
-        public static Func<object[], object> GetAnonymousInstantiator(Type type)
-        {
-            var ctor = type.GetConstructors().First();
-            var paramExpr = Expression.Parameter(typeof(object[]));
-            return Expression.Lambda<Func<object[], object>>
-            (
-                Expression.New
-                (
-                    ctor,
-                    ctor.GetParameters().Select
-                    (
-                        (x, i) => Expression.Convert
-                        (
-                            Expression.ArrayIndex(paramExpr, Expression.Constant(i)),
-                            x.ParameterType
-                        )
-                    )
-                ), paramExpr).Compile();
         }
     }
 }

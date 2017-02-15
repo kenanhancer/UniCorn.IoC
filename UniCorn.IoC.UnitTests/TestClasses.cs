@@ -123,13 +123,13 @@ namespace UniCorn.IoC.UnitTests
     }
 
     interface IService { }
-    class SomeService : IService { }
+    class TestService : IService { }
 
     interface IClient { IService Service { get; } }
-    class SomeClient : IClient
+    class TestClient : IClient
     {
         public IService Service { get; private set; }
-        public SomeClient(IService service) { Service = service; }
+        public TestClient(IService service) { Service = service; }
     }
 
 

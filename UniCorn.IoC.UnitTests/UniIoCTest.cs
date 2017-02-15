@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Xunit;
 
 namespace UniCorn.IoC.UnitTests
@@ -458,14 +459,14 @@ namespace UniCorn.IoC.UnitTests
         {
             UniIoC container = new UniIoC();
 
-            container.Register<IClient, SomeClient>();
-            container.Register<IService, SomeService>();
+            container.Register<IClient, TestClient>();
+            container.Register<IService, TestService>();
 
             IClient client = container.Resolve<IClient>();
 
             Assert.NotNull(client);
 
-            Assert.IsType<SomeClient>(client);
+            Assert.IsType<TestClient>(client);
 
             Assert.IsAssignableFrom<IClient>(client);
         }
@@ -475,21 +476,63 @@ namespace UniCorn.IoC.UnitTests
         {
             UniIoC container = new UniIoC();
 
-            container.Register<IClient, SomeClient>();
-            container.Register<IService, SomeService>();
-            container.Register<IService, SomeService>(f => f.RegisterBehavior(RegisterBehaviorEnum.Keep));
+            container.Register<IClient, TestClient>();
+            container.Register<IService, TestService>();
+            container.Register<IService, TestService>(f => f.RegisterBehavior(RegisterBehaviorEnum.Keep));
 
             IClient client = container.Resolve<IClient>();
 
             Assert.NotNull(client);
 
-            Assert.IsType<SomeClient>(client);
+            Assert.IsType<TestClient>(client);
 
             Assert.IsAssignableFrom<IClient>(client);
 
             container.UnRegister<IClient>();
 
             Assert.Throws<NullReferenceException>(() => container.Resolve<IClient>());
+        }
+
+        [Fact]
+        public void TestMethod19()
+        {
+            IUniIoC container = new UniIoC();
+
+            Func<object[], object> anonymousInstantiatorFunc = ReflectionFactory.GetAnonymousInstantiator(typeof(EmailLoginService));
+
+            var a1 = anonymousInstantiatorFunc(new object[] { new EmailLoginValidator() });
+        }
+
+        [Fact]
+        public void TestMethod20()
+        {
+            IUniIoC container = new UniIoC();
+
+            LambdaExpression anonymousInstantiatorExp = ReflectionFactory.GetAnonymousInstantiatorLambda(typeof(EmailLoginService));
+
+            var a1 = anonymousInstantiatorExp.Compile().DynamicInvoke(new EmailLoginValidator());
+        }
+
+        [Fact]
+        public void TestMethod21()
+        {
+            IUniIoC container = new UniIoC();
+
+            Func<object[], object> anonymousInstantiatorExp1 = container.Resolve<Func<object[], object>>(typeof(EmailLoginService));
+
+            Func<object[], object> anonymousInstantiatorExp2 = container.Resolve<Func<object[], object>>(typeof(EmailLoginService));
+
+            var a1 = anonymousInstantiatorExp1(new object[] { new EmailLoginValidator() });
+        }
+
+        [Fact]
+        public void TestMethod22()
+        {
+            IUniIoC container = new UniIoC();
+
+            LambdaExpression anonymousInstantiatorExp = container.Resolve<LambdaExpression>(typeof(EmailLoginService));
+
+            var a1 = anonymousInstantiatorExp.Compile().DynamicInvoke(new EmailLoginValidator());
         }
     }
 }
