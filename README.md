@@ -1,5 +1,5 @@
 # UniCorn.IoC
-UniCorn.IoC is lightweight, fast, full-featured IoC Container for .NET Core
+UniCorn.IoC is a lightweight, fast and full-featured IoC Container for .NET Core
 
 ##How To Install It?
 Install from `Nuget`, you should write Package Manager Console below code and `Uni.IoC` will be installed automatically.
@@ -53,6 +53,7 @@ public class Square : IShape
 ```
 
 ###Usage in application
+Circle and Square concrete types should be registered with name because of same interface(IShape), so that UniCorn.IoC can resolve services.
 ```csharp
 UniIoC container = new UniIoC();
 
@@ -64,7 +65,7 @@ var square = container.Resolve<IShape>("Square");
 ```
 
 ##Register and Resolve Complex types
-There are two concrete types which implement ILoginService interface and those have constructor which has parameter named loginValidator. UniIoC can register and resolve these complex types as below. I will use following test code for use cases.
+There are two concrete types which implement ILoginService interface and those have constructor which has parameter named loginValidator. UniCorn.IoC can register and resolve these complex types as below. I will use following test code for use cases.
 
 ###Test Service Types
 ```csharp
@@ -171,7 +172,7 @@ public class EmailLoginService : ILoginService
 ```
 
 ###Usage in application
-This sample usage will register two service type named EmailLoginService and PhoneLoginService with EmailLoginValidator and PhoneLoginValidator dependencies respectively. Those two services are using same interface, so we entitled them Email and Phone respectively so that, we can just resolve services with name.
+This sample usage will register two concrete types named EmailLoginService and PhoneLoginService with EmailLoginValidator and PhoneLoginValidator dependencies respectively. Those two concrete types are using same interface, so we entitled them Email and Phone respectively so that, we can just resolve services with name.
 
 ```csharp
 UniIoC container = new UniIoC();
