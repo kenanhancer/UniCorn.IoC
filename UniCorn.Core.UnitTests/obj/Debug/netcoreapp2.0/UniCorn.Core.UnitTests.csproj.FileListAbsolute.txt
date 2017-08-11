@@ -1,0 +1,15 @@
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core.UnitTests\bin\Debug\netcoreapp2.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core.UnitTests\bin\Debug\netcoreapp2.0\xunit.runner.utility.netstandard15.dll
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core.UnitTests\bin\Debug\netcoreapp2.0\xunit.runner.reporters.netstandard15.dll
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core.UnitTests\bin\Debug\netcoreapp2.0\UniCorn.Core.UnitTests.deps.json
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core.UnitTests\bin\Debug\netcoreapp2.0\UniCorn.Core.UnitTests.runtimeconfig.json
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core.UnitTests\bin\Debug\netcoreapp2.0\UniCorn.Core.UnitTests.runtimeconfig.dev.json
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core.UnitTests\bin\Debug\netcoreapp2.0\UniCorn.Core.UnitTests.dll
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core.UnitTests\bin\Debug\netcoreapp2.0\UniCorn.Core.UnitTests.pdb
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core.UnitTests\bin\Debug\netcoreapp2.0\UniCorn.Core.dll
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core.UnitTests\bin\Debug\netcoreapp2.0\UniCorn.Core.pdb
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core.UnitTests\obj\Debug\netcoreapp2.0\UniCorn.Core.UnitTests.csprojResolveAssemblyReference.cache
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core.UnitTests\obj\Debug\netcoreapp2.0\UniCorn.Core.UnitTests.csproj.CoreCompileInputs.cache
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core.UnitTests\obj\Debug\netcoreapp2.0\UniCorn.Core.UnitTests.AssemblyInfo.cs
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core.UnitTests\obj\Debug\netcoreapp2.0\UniCorn.Core.UnitTests.dll
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core.UnitTests\obj\Debug\netcoreapp2.0\UniCorn.Core.UnitTests.pdb
