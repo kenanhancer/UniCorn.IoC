@@ -1,0 +1,13 @@
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.IoC\bin\Debug\netstandard2.0\UniCorn.IoC.deps.json
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.IoC\obj\Debug\netstandard2.0\UniCorn.IoC.csproj.CoreCompileInputs.cache
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.IoC\obj\Debug\netstandard2.0\UniCorn.IoC.AssemblyInfo.cs
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.IoC\bin\Debug\netstandard2.0\UniCorn.IoC.dll
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.IoC\bin\Debug\netstandard2.0\UniCorn.IoC.pdb
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.IoC\bin\Debug\netstandard2.0\UniCorn.Core.dll
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.IoC\bin\Debug\netstandard2.0\UniCorn.Core.pdb
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.IoC\obj\Debug\netstandard2.0\UniCorn.IoC.dll
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.IoC\obj\Debug\netstandard2.0\UniCorn.IoC.pdb
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.IoC\obj\Debug\netstandard2.0\UniCorn.IoC.AssemblyInfoInputs.cache
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.IoC\bin\Debug\netstandard2.0\UniCorn.BaseLibrary.dll
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.IoC\bin\Debug\netstandard2.0\UniCorn.BaseLibrary.pdb
+C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.IoC\obj\Debug\netstandard2.0\UniCorn.IoC.csprojResolveAssemblyReference.cache

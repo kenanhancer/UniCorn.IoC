@@ -1,7 +1,0 @@
-C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core\bin\Debug\netstandard1.6\UniCorn.Core.deps.json
-C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core\bin\Debug\netstandard1.6\UniCorn.Core.dll
-C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core\bin\Debug\netstandard1.6\UniCorn.Core.pdb
-C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core\obj\Debug\netstandard1.6\UniCorn.Core.AssemblyInfo.cs
-C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core\obj\Debug\netstandard1.6\UniCorn.Core.dll
-C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core\obj\Debug\netstandard1.6\UniCorn.Core.pdb
-C:\Users\dtkhancer\Documents\KenanUni\CSharp_Projects\UniCorn\UniCorn.Core\obj\Debug\netstandard1.6\UniCorn.Core.csproj.CoreCompileInputs.cache
