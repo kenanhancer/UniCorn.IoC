@@ -1,14 +1,14 @@
 # UniCorn.IoC
 UniCorn.IoC is a lightweight, fast and full-featured IoC Container for .NET Core
 
-##How To Install It?
+## How To Install It?
 Install from `Nuget`, you should write Package Manager Console below code and `Uni.IoC` will be installed automatically.
 ```
 Install-Package Uni.IoC
 ```
 By the way, you can also reach `Uni.IoC` `NuGet` package from https://www.nuget.org/packages/Uni.IoC/ address.
 
-##How Do You Use It?
+## How Do You Use It?
 It is easy to use. Let's have a look at a simple example.
 
 Firstly, UniIoC object is created named container. And register a interface to a concrete type. Lastly, resolve instance according to registered interface as shown below code.
@@ -21,7 +21,7 @@ container.Register(ServiceCriteria.For<IShape>().ImplementedBy<Circle>());
 var shape = container.Resolve<IShape>();
 ```
 
-##Register and Resolve concrete types without interface
+## Register and Resolve concrete types without interface
 You can register concrete types without interface as below;
 
 ```csharp
@@ -34,7 +34,7 @@ IShape circle = container.Resolve<Circle>();
 IShape square = container.Resolve<Square>();
 ```
 
-##Resolving different concrete types which implement same interface
+## Resolving different concrete types which implement same interface
 If you have different concrete types which imlement same interface, you can register them with different names. As you can see below sample code, there is one `IShape` interface and two concrete types `Circle`, `Square` which use that interface.
 
 ###Test Service Types
@@ -52,7 +52,7 @@ public class Square : IShape
 }
 ```
 
-###Usage in application
+### Usage in application
 Circle and Square concrete types should be registered with name because of same interface(IShape), so that UniCorn.IoC can resolve services.
 ```csharp
 UniIoC container = new UniIoC();
@@ -64,10 +64,10 @@ var circle = container.Resolve<IShape>("Circle");
 var square = container.Resolve<IShape>("Square");
 ```
 
-##Register and Resolve Complex types
+## Register and Resolve Complex types
 There are two concrete types which implement ILoginService interface and those have constructor which has parameter named loginValidator. UniCorn.IoC can register and resolve these complex types as below. I will use following test code for use cases.
 
-###Test Service Types
+### Test Service Types
 ```csharp
 public interface ILoginService
 {
@@ -171,7 +171,7 @@ public class EmailLoginService : ILoginService
     }
 ```
 
-###Usage in application
+### Usage in application
 This sample usage will register two concrete types named EmailLoginService and PhoneLoginService with EmailLoginValidator and PhoneLoginValidator dependencies respectively. Those two concrete types are using same interface, so we entitled them Email and Phone respectively so that, we can just resolve services with name.
 
 ```csharp
